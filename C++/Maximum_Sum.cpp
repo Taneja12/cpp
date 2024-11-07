@@ -8,17 +8,28 @@ class Solution
 public:
   int Maximum_Sum(vector<vector<int>> &mat, int N, int K)
   {
-    int row = 0,col = 0,max=0,sum=0;
-    for(int i=row;i<K;i++){
-      for(int j=row;j<K;j++){
-        sum += mat[i][j];
+    vector<vector<int>> prefix(N + 1, vector<int>(N + 1, 0));
+    for (int i = 1; i <= N; i++)
+    {
+      for (int j = 1; j <= N; j++)
+      {
+        prefix[i][j] = mat[i - 1][j - 1] + prefix[i - 1][j] + prefix[i][j - 1] - prefix[i - 1][j - 1];
       }
     }
-    row += K;
-    
+
+    int maxSum = INT_MIN;
+
+    for (int i = K; i <= N; i++)
+    {
+      for (int j = K; j <= N; j++)
+      {
+        int currentSum = prefix[i][j] - prefix[i-K][j] - prefix[i][j-K] + prefix[i-K][j-K];
+        maxSum = max(maxSum,currentSum);
+      }
+    }
+    return maxSum;
   }
 };
-
 
 int main()
 {

@@ -16,7 +16,7 @@ public:
 private:
   void solve(int row, int n, vector<string> &board, vector<vector<string>> &solutions)
   {
-    if (row == 4)
+    if (row == n)
     {
       solutions.push_back(board);
     }
